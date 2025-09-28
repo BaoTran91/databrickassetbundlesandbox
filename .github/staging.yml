@@ -1,14 +1,11 @@
-name: Deploy to DEV
+name: Deploy to staging
 
 concurrency: 1
 
 on:
   workflow_dispatch:
 
-  pull_request:
-    types:
-      - opened
-      - synchronize
+  push:
     branches:
       - main
     paths:
@@ -28,7 +25,7 @@ jobs:
       - run: databricks bundle deploy
         env:
           DATABRICKS_TOKEN: ${{ secrets.E2_DEMO_WEST_TOKEN }}
-          DATABRICKS_BUNDLE_ENV: dev
+          DATABRICKS_BUNDLE_ENV: staging
 
   pipeline_update:
     name: "Run pipeline update"
@@ -40,31 +37,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-#       - uses: actions/setup-python@v4
-#         with:
-#           python-version: 3.11
-#           cache: 'pip'
-
-#       - run: pip install -r requirements.txt
-#         working-directory: .github/support
-
       - uses: databricks/setup-cli@main
 
-      - shell: bash
-        name: Run pipeline update
-        run: |
-          set -o pipefail
-          databricks bundle run datakickstart_dabs_job --refresh-all 2>&1 | tee output.log
+      - run: databricks bundle run datakickstart_dabs_job --refresh-all
         env:
           DATABRICKS_TOKEN: ${{ secrets.E2_DEMO_WEST_TOKEN }}
-          DATABRICKS_BUNDLE_ENV: dev
-
-#       - shell: bash
-#         if: always()
-#         name: Emit annotations
-#         run: |
-#           pipeline_id=$(head -1 output.log | awk -F / '{print $6}')
-#           update_id=$(head -1 output.log | awk -F / '{print $8}')
-#           PYTHONPATH=$PWD:$PWD/.github/support python3 .github/support/emit_annotations.py $pipeline_id $update_id
-#         env:
-#           DATABRICKS_TOKEN: ${{ secrets.E2_DEMO_WEST_TOKEN }}
+          DATABRICKS_BUNDLE_ENV: staging
