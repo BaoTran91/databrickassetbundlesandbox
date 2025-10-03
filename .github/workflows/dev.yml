@@ -5,12 +5,9 @@ concurrency: 1
 on:
   workflow_dispatch:
 
-  pull_request:
-    types:
-      - opened
-      - synchronize
+  push:
     branches:
-      - main
+      - dev
     paths:
       - "**/*.yml"
       - "**/*.py"
@@ -19,12 +16,10 @@ jobs:
   deploy:
     name: "Deploy bundle"
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
-
       - uses: databricks/setup-cli@main
-
+      - run: pip install uv
       - run: databricks bundle deploy
         env:
           DATABRICKS_TOKEN: ${{ secrets.E2_DEMO_WEST_TOKEN }}
@@ -54,6 +49,7 @@ jobs:
         name: Run pipeline update
         run: |
           set -o pipefail
+          pip install uv
           databricks bundle run datakickstart_dabs_job --refresh-all 2>&1 | tee output.log
         env:
           DATABRICKS_TOKEN: ${{ secrets.E2_DEMO_WEST_TOKEN }}
