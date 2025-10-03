@@ -24,10 +24,10 @@ jobs:
 
       - run: |
               pip install uv
-              databricks bundle deploy
+              databricks bundle deploy -t staging --auto-approve
         env:
           DATABRICKS_TOKEN: ${{ secrets.E2_DEMO_WEST_TOKEN }}
-          DATABRICKS_BUNDLE_ENV: staging -t staging --auto-approve
+          DATABRICKS_BUNDLE_ENV: staging
 
   pipeline_update:
     name: "Run pipeline update"
