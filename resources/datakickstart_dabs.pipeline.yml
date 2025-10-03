@@ -3,7 +3,7 @@ resources:
   pipelines:
     datakickstart_dabs_pipeline:
       name: datakickstart_dabs_pipeline_${bundle.target}
-      catalog: workspace
+      catalog: sandbox
       schema: datakickstart_dabs_${bundle.target}
       serverless: true
       libraries:
