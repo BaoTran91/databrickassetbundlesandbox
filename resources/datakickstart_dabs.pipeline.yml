@@ -4,7 +4,7 @@ resources:
     datakickstart_dabs_pipeline:
       name: datakickstart_dabs_pipeline_${bundle.target}
       catalog: sandbox
-      schema: datakickstart_dabs_${bundle.target}
+      schema: assetbundle_tutorial_${bundle.target}
       serverless: true
       libraries:
         - notebook:
@@ -12,3 +12,4 @@ resources:
 
       configuration:
         bundle.sourcePath: ${workspace.file_path}/src
+        db_env: ${bundle.target}
