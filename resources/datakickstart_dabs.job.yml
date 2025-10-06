@@ -18,9 +18,6 @@ resources:
         - task_key: notebook_task
           notebook_task:
             notebook_path: ../src/notebook.ipynb
-          libraries:
-            - pypi:
-                package: pytest
           max_retries: 0
 
         - task_key: refresh_pipeline
@@ -47,5 +44,5 @@ resources:
             environment_version: "2"
             dependencies:
               - ../dist/*.whl
-
-
+              - pypi:
+                  package: pytest
