@@ -10,14 +10,18 @@ resources:
           interval: 1
           unit: DAYS
 
-      #email_notifications:
-      #  on_failure:
-      #    - your_email@example.com
+      email_notifications:
+        on_failure:
+          - bqt1991@gmail.com
 
       tasks:
         - task_key: notebook_task
           notebook_task:
             notebook_path: ../src/notebook.ipynb
+          libraries:
+            - pypi:
+                package: pytest
+          max_retries: 0
 
         - task_key: refresh_pipeline
           depends_on:

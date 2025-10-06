@@ -1,12 +1,11 @@
 .vscode
-local_*
 .databricks/
+.databricks
+.venv/
 build/
 dist/
 __pycache__/
-*.egg-info
-.venv/
+local_*
 scratch/**
 !scratch/README.md
-
-.databricks
+*.egg-info
