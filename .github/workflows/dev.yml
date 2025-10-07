@@ -26,8 +26,7 @@ jobs:
           databricks configure --host 'https://dbc-11d28957-3f38.cloud.databricks.com' --token ${{ secrets.E2_DEMO_WEST_TOKEN }}
 
       - name: Run unit tests
-        run: |
-          pytest tests/
+        run: pytest tests/
 
       - uses: databricks/setup-cli@main
 
