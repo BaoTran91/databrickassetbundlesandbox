@@ -23,7 +23,7 @@ jobs:
 
       - name: Configure Databricks Connect (optional)
         run: |
-          databricks-connect configure --host 'https://dbc-11d28957-3f38.cloud.databricks.com' --token ${{ secrets.E2_DEMO_WEST_TOKEN }}
+          databricks configure --host 'https://dbc-11d28957-3f38.cloud.databricks.com' --token ${{ secrets.E2_DEMO_WEST_TOKEN }}
 
       - name: Run unit tests
         run: |
