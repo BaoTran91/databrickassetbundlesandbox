@@ -22,6 +22,8 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Run unit tests
         env:
+          DATABRICKS_TOKEN: ${{ secrets.E2_DEMO_WEST_TOKEN }}
+          DATABRICKS_BUNDLE_ENV: dev
           SPARK_REMOTE: databricks://DEFAULT
         run: |
           pytest tests/
