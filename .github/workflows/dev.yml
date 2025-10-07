@@ -20,10 +20,17 @@ jobs:
       - uses: actions/checkout@v3
       - run: pip install uv
       - run: pip install -r requirements.txt
-      - uses: databricks/setup-cli@main
+
+      - name: Configure Databricks Connect (optional)
+        run: |
+          databricks-connect configure --host 'https://dbc-11d28957-3f38.cloud.databricks.com' --token ${{ secrets.E2_DEMO_WEST_TOKEN }}
+
       - name: Run unit tests
         run: |
           pytest tests/
+
+      - uses: databricks/setup-cli@main
+
       - run: databricks bundle deploy --auto-approve
         env:
           DATABRICKS_TOKEN: ${{ secrets.E2_DEMO_WEST_TOKEN }}
