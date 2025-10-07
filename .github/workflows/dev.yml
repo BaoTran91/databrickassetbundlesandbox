@@ -20,11 +20,10 @@ jobs:
       - uses: actions/checkout@v3
       - run: pip install uv
       - run: pip install -r requirements.txt
-
       - name: Run unit tests
         env:
+          SPARK_REMOTE: "https://dbc-11d28957-3f38.cloud.databricks.com/"
           DATABRICKS_TOKEN: ${{ secrets.E2_DEMO_WEST_TOKEN }}
-          DATABRICKS_BUNDLE_ENV: dev
         run: |
           pytest tests/
 
@@ -33,7 +32,6 @@ jobs:
         env:
           DATABRICKS_TOKEN: ${{ secrets.E2_DEMO_WEST_TOKEN }}
           DATABRICKS_BUNDLE_ENV: dev
-
 
   pipeline_update:
     name: "Run pipeline update"
@@ -60,7 +58,7 @@ jobs:
         run: |
           set -o pipefail
           pip install uv
-          databricks bundle run notebook_validation_job --refresh-all 2>&1 | tee output.log
+          databricks bundle run datakickstart_dabs_job --refresh-all 2>&1 | tee output.log
         env:
           DATABRICKS_TOKEN: ${{ secrets.E2_DEMO_WEST_TOKEN }}
           DATABRICKS_BUNDLE_ENV: dev
