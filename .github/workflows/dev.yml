@@ -20,9 +20,11 @@ jobs:
       - uses: actions/checkout@v3
       - run: pip install uv
       - run: pip install -r requirements.txt
+
       - name: Run unit tests
         env:
-          SPARK_REMOTE: ${{secrets.E2_DEMO_WEST_TOKEN}}
+          DATABRICKS_TOKEN: ${{ secrets.E2_DEMO_WEST_TOKEN }}
+          DATABRICKS_BUNDLE_ENV: dev
         run: |
           pytest tests/
 
